@@ -45,10 +45,21 @@ window.addEventListener('mousemove',(event)=>{
     cursor.y = -(event.clientY / sizes.height - 0.5);
 })
 
+window.addEventListener('resize',()=>{
+    //update size
+    sizes.width = window.innerWidth;
+    sizes.height = window.innerHeight;
+    //update aspect ratio
+    camera.aspect = sizes.width/sizes.height;
+    camera.updateProjectionMatrix();
+    renderer.setSize(sizes.width,sizes.height);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+})
+
 const animation =()=>{
-    camera.position.x = (Math.sin(cursor.x * Math.PI * 2)) * 3;
-    camera.position.z = (Math.cos(cursor.x * Math.PI * 2)) * 3;
-    camera.position.y = cursor.y * 5;
+    // camera.position.x = (Math.sin(cursor.x * Math.PI * 2)) * 3;
+    // camera.position.z = (Math.cos(cursor.x * Math.PI * 2)) * 3;
+    // camera.position.y = cursor.y * 5;
     camera.lookAt(mesh.position)
 
     window.requestAnimationFrame(animation);
@@ -61,5 +72,6 @@ const animation =()=>{
 const renderer = new THREE.WebGLRenderer({
     canvas: canvas
 })
-renderer.setSize(sizes.width, sizes.height)
+renderer.setSize(sizes.width, sizes.height);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
 animation();
